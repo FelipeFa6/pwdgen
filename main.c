@@ -5,19 +5,10 @@
 
 #define MAX_RANDOM 10
 
-typedef enum {
-    LOWERCASE,
-    UPPERCASE,
-    NUMBER,
-    SYMBOL
-} KeyType;
-
-const char* keyStrings[] = {
-    [LOWERCASE] = "abcdefghijklmnopq",
-    [UPPERCASE] = "ABCDEFGHIJKLMNOPQ",
-    [NUMBER]    = "1234567890",
-    [SYMBOL]    = "!@#$%^&*()_+",
-};
+const char *lowercase = "abcdefghijklmnopq";
+const char *uppercase = "ABCDEFGHIJKLMNOPQ";
+const char *number    = "1234567890";
+const char *symbol    = "!@#$%^&*()_+";
 
 int randomize_number(int limit) {
     int r = rand() % limit;
@@ -25,6 +16,13 @@ int randomize_number(int limit) {
 }
 
 int main() {
+    const char* keyStrings[] = {
+        lowercase,
+        uppercase,
+        number,
+        symbol
+    };
+
     #ifdef DEBUG
         printf("--- DEBUG MODE:---\n");
         printf("Seed = 42\n");
@@ -33,23 +31,15 @@ int main() {
         srand(time(NULL));              // Real randomness for production
     #endif
 
-    int opt[] = {
-        LOWERCASE,
-        UPPERCASE,
-        NUMBER,
-        SYMBOL
-    };
-
-    int opt_size = (int) sizeof(opt) / sizeof(int);
+    int size = (int) sizeof(keyStrings) / sizeof(keyStrings[0]);
     int pwd_size = 16;
 
     for(int i = 0; i < pwd_size ; i++) {
-        int rand_number = randomize_number(opt_size);
-        const char *s   = keyStrings[rand_number];
-        int s_size      = strlen(s);
-        char val        = s[randomize_number(s_size)];
+        int n = randomize_number(size);
+        const char *opt = keyStrings[n];
+        int opt_size = strlen(opt);
 
-        printf("%c", val);
+        printf("%c", opt[randomize_number(opt_size)]);
     }
 
     printf("\n");

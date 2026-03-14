@@ -3,7 +3,7 @@
 #include <string.h>
 #include <time.h>
 
-#define MAX_RANDOM 10
+#define PWD_SIZE 16
 
 const char *lowercase = "abcdefghijklmnopq";
 const char *uppercase = "ABCDEFGHIJKLMNOPQ";
@@ -32,9 +32,8 @@ int main() {
     #endif
 
     int size = (int) sizeof(keyStrings) / sizeof(keyStrings[0]);
-    int pwd_size = 16;
 
-    for(int i = 0; i < pwd_size ; i++) {
+    for(int i = 0; i < PWD_SIZE ; i++) {
         int n = randomize_number(size);
         const char *opt = keyStrings[n];
         int opt_size = strlen(opt);
